@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jsg.house.repository.mybatis.HouseMapper">
+    <insert id="save">
+        INSERT INTO HOUSE (TITLE, DEPOSIT, TYPE, DEAL_TYPE, FLOOR, PRICE, AREA, ASPECT,
+        LOC, DETAIL, MEMBER_ID, MANAGE, STATE, LAT, LNG, INPUT_TIME)
+        VALUES(#{title}, #{deposit}, #{type}, #{dealType}, #{floor}, #{price}, #{area}, #{aspect}, #{loc}, #{detail},
+        #{memberId}, #{manage}, #{state}, #{lat}, #{lng}, #{inputTime})
+    </insert>
+
+    <update id="update">
+        UPDATE HOUSE
+        SET TITLE = #{title}, DEPOSIT = #{deposit}, TYPE = #{type}, DEAL_TYPE = #{dealType}, FLOOR = #{floor}, PRICE = #{price},
+            AREA = #{area}, ASPECT = #{aspect}, LOC = #{loc}, DETAIL = #{detail}, MANAGE= #{manage}, STATE = #{state},
+            LAT = #{lat}, LNG = #{lng}, INPUT_TIME = #{inputTime}, LAST_UPDATE_DATE = CURRENT_TIMESTAMP()
+        WHERE HOUSE_ID = #{houseId}
+    </update>
+
+    <delete id="delete">
+        UPDATE HOUSE
+        SET USE_YN = 'N'
+        WHERE HOUSE_ID = #{houseId}
+    </delete>
+
+    <select id="findById" resultType="House">
+        SELECT HOUSE_ID, TITLE, DEPOSIT, TYPE, DEAL_TYPE, FLOOR, PRICE, AREA, ASPECT, LOC, DETAIL, MEMBER_ID,
+               MANAGE, STATE, LAT, LNG, INPUT_TIME, LAST_UPDATE_DATE
+        FROM HOUSE
+        WHERE HOUSE_ID = #{houseId}
+            AND USE_YN = 'Y'
+    </select>
+
+    <select id="findByUserId" resultType="House">
+        SELECT HOUSE_ID, TITLE, DEPOSIT, TYPE, DEAL_TYPE, FLOOR, PRICE, AREA, ASPECT, LOC, DETAIL, MEMBER_ID,
+               MANAGE, STATE, LAT, LNG, INPUT_TIME, LAST_UPDATE_DATE
+        FROM HOUSE
+        WHERE MEMBER_ID = #{memberId}
+            AND USE_YN = 'Y'
+    </select>
+
+    <select id="findAll" resultType="House">
+        SELECT HOUSE_ID, TITLE, DEPOSIT, TYPE, DEAL_TYPE, FLOOR, PRICE, AREA, ASPECT, LOC, DETAIL, MEMBER_ID,
+               MANAGE, STATE, LAT, LNG, INPUT_TIME, LAST_UPDATE_DATE
+        FROM HOUSE
+        WHERE MEMBER_ID = #{memberId}
+              AND USE_YN = 'Y'
+    </select>
+</mapper>
