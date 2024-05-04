@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jsg.house.repository.mybatis.MemberMapper">
+    <insert id="save">
+        INSERT INTO MEMBER (USER_NAME, PWD, NAME, ADDRESS, EMAIL, PHONE)
+        VALUES (#{userName}, #{pwd}, #{name}, #{address}, #{email}, #{phone})
+    </insert>
+
+    <update id="update">
+        UPDATE MEMBER
+        SET PWD = #{pwd}, ADDRESS = #{address}, EMAIL = #{email}, PHONE = #{phone}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <select id="findOne" resultType="Member">
+        SELECT MEMBER_ID, USER_NAME, NAME, ADDRESS, EMAIL, PHONE, PWD
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <select id="findByUserName" resultType="Member">
+        SELECT MEMBER_ID, USER_NAME, NAME, ADDRESS, EMAIL, PHONE, PWD
+        FROM MEMBER
+        WHERE USER_NAME = #{userName}
+    </select>
+
+    <delete id="delete">
+        DELETE MEMBER
+        WHERE MEMBER_ID = ${memberId}
+    </delete>
+</mapper>
