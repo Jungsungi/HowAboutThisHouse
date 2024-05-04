@@ -10,24 +10,27 @@
 
     <update id="update">
         UPDATE MEMBER
-        SET PWD = #{pwd}, ADDRESS = #{address}, EMAIL = #{email}, PHONE = #{phone}
+        SET PWD = #{pwd}, ADDRESS = #{address}, EMAIL = #{email}, PHONE = #{phone}, last_update_date = CURRENT_TIMESTAMP()
         WHERE MEMBER_ID = #{memberId}
     </update>
 
     <select id="findOne" resultType="Member">
-        SELECT MEMBER_ID, USER_NAME, NAME, ADDRESS, EMAIL, PHONE, PWD
+        SELECT MEMBER_ID, USER_NAME, NAME, ADDRESS, EMAIL, PHONE, PWD, last_update_date
         FROM MEMBER
         WHERE MEMBER_ID = #{memberId}
+            AND USE_YN = 'Y'
     </select>
 
     <select id="findByUserName" resultType="Member">
-        SELECT MEMBER_ID, USER_NAME, NAME, ADDRESS, EMAIL, PHONE, PWD
+        SELECT MEMBER_ID, USER_NAME, NAME, ADDRESS, EMAIL, PHONE, PWD, last_update_date
         FROM MEMBER
         WHERE USER_NAME = #{userName}
+            AND USE_YN = 'Y'
     </select>
 
     <delete id="delete">
-        DELETE MEMBER
+        UPDATE HOUSE
+        SET USE_YN = 'N'
         WHERE MEMBER_ID = ${memberId}
     </delete>
 </mapper>

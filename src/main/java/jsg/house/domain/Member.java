@@ -17,6 +17,11 @@ public class Member {
     private String email;
     private String phone;
 
+    private String createDate;
+    private String lastUpdateDate;
+
+    private String useYn;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
