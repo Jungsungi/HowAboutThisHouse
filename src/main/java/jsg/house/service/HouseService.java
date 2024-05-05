@@ -1,8 +1,10 @@
 package jsg.house.service;
 
-import jsg.house.domain.House;
-import jsg.house.domain.HouseSearch;
+import jsg.house.domain.*;
 import jsg.house.repository.HouseRepository;
+import jsg.house.repository.ManageCostRepository;
+import jsg.house.repository.OptionsRepository;
+import jsg.house.repository.SecurityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +17,22 @@ import java.util.List;
 public class HouseService {
 
     private final HouseRepository houseRepository;
+    private final ManageCostRepository manageCostRepository;
+    private final OptionsRepository optionsRepository;
+    private final SecurityRepository securityRepository;
 
-    public void saveHouse(House house) {
+    public void saveHouse(House house, ManageCost manageCost, Options options, Security security) {
         houseRepository.save(house);
+
+        Long houseId = house.getHouseId();
+
+        manageCost.setHouseId(houseId);
+        options.setHouseId(houseId);
+        security.setHouseId(houseId);
+
+        manageCostRepository.save(manageCost);
+        optionsRepository.save(options);
+        securityRepository.save(security);
     }
 
     public void updateHouse(House house) {
