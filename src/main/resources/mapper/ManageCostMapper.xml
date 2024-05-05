@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jsg.house.repository.mybatis.ManageCostMapper">
+
+    <insert id="save">
+        INSERT INTO MANAGECOST (HOUSE_ID, ELEC_COST, WATER_COST, INTERNET_COST, GAS_COST, PARK_COST)
+        VALUES (#{houseId}, #{elecCost}, #{waterCost}, #{internetCost}, #{gasCost}, #{parkCost})
+    </insert>
+
+    <update id="update">
+        UPDATE MANAGECOST
+        SET ELEC_COST = #{elecCost}, WATER_COST = #{waterCost}, INTERNET_COST = #{internetCost},
+            GAS_COST = #{gasCost}, PARK_COST = #{parkCost}
+        WHERE MANAGE_COST_ID = #{manageCostId}
+    </update>
+
+    <select id="findByHouseId">
+        SELECT ELEC_COST, WATER_COST, INTERNET_COST, GAS_COST, PARK_COST
+        FROM MANAGECOST
+        WHERE HOUSE_ID = #{houseId}
+    </select>
+</mapper>
