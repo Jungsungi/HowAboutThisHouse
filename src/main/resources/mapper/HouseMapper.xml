@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jsg.house.repository.mybatis.HouseMapper">
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyProperty="houseId">
         INSERT INTO HOUSE (TITLE, DEPOSIT, TYPE, DEAL_TYPE, FLOOR, PRICE, AREA, ASPECT,
         LOC, DETAIL, MEMBER_ID, MANAGE, STATE, LAT, LNG, INPUT_TIME)
         VALUES(#{title}, #{deposit}, #{type}, #{dealType}, #{floor}, #{price}, #{area}, #{aspect}, #{loc}, #{detail},
