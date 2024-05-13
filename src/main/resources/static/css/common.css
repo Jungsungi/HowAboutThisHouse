@@ -1,0 +1,39 @@
+.nav-container {
+    position: absolute;
+    right: 5%;
+}
+
+.nav-link {
+    font-size: large;
+    margin-right: 100px;
+    width: 100%;
+}
+
+.nav_item {
+    height: 55px;
+    padding: 1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    z-index: 7;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.header_icon {
+    color: #ffffff;
+    font-family: 'Jalnan';
+    font-size: x-large;
+    margin-left: 50px;
+    z-index: 7;
+}
+
+a {
+    text-decoration : none;
+}
+
+.space {
+    height: 20px;
+}

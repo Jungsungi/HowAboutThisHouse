@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:id="main_header" th:fragment="bodyHeader" style="margin-bottom: 100px; background-color: crimson; height: 80px;">
+    <nav class="navbar navbar-expand-lg" style="padding-top: 22px;">
+        <a th:text="이방어때" th:href="@{/}" class="navbar-brand header_icon"></a>
+        <div class="collapse navbar-collapse nav-container" style="float: right">
+            <ul class="navbar-nav me-auto mb-auto">
+                <li class="nav-item">
+                    <a th:text="지도" th:href="@{#}" class="nav-link nav_item"></a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:text="관심목록" th:href="@{#}" class="nav-link nav_item"></a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:text="방내놓기" th:href="@{#}" class="nav-link nav_item"></a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:text="알림" th:href="@{#}" class="nav-link nav_item"></a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:if="${session.get('loginId') != null}" th:text="${session.get('loginId').userName}" th:href="@{|/member/${session.get('loginId').memberId}|}" class="nav-link nav_item"></a>
+                    <a th:if="${session.get('loginId') == null}" th:text="로그인" class="nav-link nav_item" th:href="@{/login}"></a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:if="${session.get('loginId') != null}" th:text="|로그아웃|" th:href="@{/logout}" class="nav-link nav_item"></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>>
