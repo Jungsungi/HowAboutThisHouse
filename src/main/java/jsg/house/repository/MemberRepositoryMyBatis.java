@@ -35,4 +35,9 @@ public class MemberRepositoryMyBatis implements MemberRepository{
     public void delete(Long memberId) {
         memberMapper.delete(memberId);
     }
+
+    @Override
+    public Member login(String loginId, String loginPwd) {
+        return memberMapper.login(loginId, loginPwd);
+    }
 }

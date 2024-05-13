@@ -12,4 +12,6 @@ public interface MemberRepository {
     Member findByUserName (String userName);
 
     void delete(Long memberId);
+
+    Member login(String loginId, String loginPwd);
 }
