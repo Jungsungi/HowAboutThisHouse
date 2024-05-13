@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="views/common/header :: header"/>
+<style>
+  #checkBtn {
+    position: absolute;
+    width: 90px;
+    height: 37px;
+    top: 1;
+    bottom: 0;
+    right: 5px;
+    margin: auto 0;
+    border-radius: 3px;
+    background-color: crimson;
+    color: snow;
+  }
+</style>
+<body>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+  let userNameFlag = false;
+  let pwdFlag = false;
+
+  $(document).ready(function (){
+      $("#pwdOK").on("blur", function () {
+        let input = $(this).val();
+        let pwd = $("#pwd").val();
+
+        if (input == pwd) {
+          $("#pwdCheckResult").removeClass("alert-danger")
+          $("#pwdCheckResult").css("visibility", "visible").html("비밀번호가 일치합니다.").addClass("alert-success");
+          pwdFlag = true;
+        } else {
+          $("#pwdCheckResult").removeClass("alert-success")
+          $("#pwdCheckResult").css("visibility", "visible").html("비밀번호가 일치하지 않습니다.").addClass("alert-danger");
+          pwdFlag = false;
+        }
+      });
+
+      $("#userName").on("blur", function () {
+        userNameFlag = false;
+      })
+
+    $("#submitBtn").click(function (event) {
+      if (!userNameFlag) {
+        alert("아이디 중복확인을 진행해 주세요.");
+        $("#userName").focus();
+        event.preventDefault();
+        return;
+      }
+
+      if (!pwdFlag) {
+        alert("비밀번호가 일치하지 않습니다. \n 확인해주세요.");
+        $("#pwdOk").focus();
+        event.preventDefault();
+        return;
+      }
+
+      if(nullCheck($("#address").val())){
+        alert("주소를 입력해 주세요.");
+        $("#address").focus();
+        event.preventDefault();
+        return;
+      }
+
+      if(nullCheck($("#email").val())){
+        alert("email을 입력해 주세요.");
+        $("#email").focus();
+        event.preventDefault();
+        return;
+      }
+
+      if (nullCheck($("#firstPhone").val()) || nullCheck($("#middlePhone").val()) || nullCheck($("#lastPhone").val())) {
+        alert("전화번호를 입력해주세요.");
+        $("#firstPhone").focus();
+        event.preventDefault();
+        return;
+      }
+
+    });
+  });
+
+  function userNameCheck() {
+    let userName = $("#userName").val();
+
+    if (nullCheck(userName)) {
+      alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    $.ajax({
+      url : "/member/" + userName,
+      method : "post",
+      success : function (data) {
+        console.log(data);
+        if (data == null || data == '') {
+          alert("사용 가능한 아이디입니다.");
+          userNameFlag = true;
+          $("#name").focus();
+        } else {
+          alert("중복된 아이디입니다.");
+          $("#userName").focus();
+        }
+      }
+    })
+  }
+
+  function getAddress() {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        console.log(data)
+        $("#address").val(data.roadAddress + " " + data.buildingName);
+      }
+    }).open();
+  }
+
+</script>
+<div th:replace="views/common/bodyHeader :: bodyHeader"/>
+<div class="container" style="width: 60%;">
+  <form action="" method="post" th:object="${memberAddForm}">
+    <div id="insertMember" class="h1 mb-3 fw-normal">회원가입</div>
+    <div class="row g-3">
+      <div class="col-sm-12" style="position: relative;">
+        <label th:for="*{userName}" class="form-label" th:text="아이디"></label>
+        <input type="text" th:field="*{userName}" class="form-control"  th:placeholder="|아이디 입력 (6 ~ 20자)|">
+        <button type="button" th:onclick="userNameCheck()" th:text="중복확인" th:id="checkBtn"></button>
+      </div>
+      <div class="col-sm-12">
+        <label th:for="*{name}" class="form-label" th:text="이름"></label>
+        <input type="text" th:field="*{name}" class="form-control" th:placeholder="|이름을 입력해주세요.|">
+      </div>
+      <div class="col-sm-12">
+        <label th:for="*{pwd}" class="form-label" th:text="비밀번호"></label>
+        <input type="password" th:field="*{pwd}" class="form-control" th:placeholder="|비밀번호 입력 (영어, 숫자 포함 8글자 이상)|">
+      </div>
+      <div class="col-sm-12">
+        <label th:for="pwdOk" class="form-label" th:text="|비밀번호 확인|"></label>
+        <span th:id="pwdCheckResult" style="visibility: hidden;">비밀번호가 일치합니다.</span>
+        <input type="password" th:id="pwdOK" class="form-control" th:placeholder="|비밀번호 재입력|">
+      </div>
+      <div class="col-sm-12">
+        <label th:for="*{address}" class="form-label" th:text="주소"></label>
+        <input type="text" th:field="*{address}" class="form-control" onclick="getAddress()">
+      </div>
+      <div class="col-sm-12">
+        <label th:for="*{detailAddress}" class="form-label" th:text="상세주소"></label>
+        <input type="text" th:field="*{detailAddress}" class="form-control" th:placeholder="|상세주소 입력|">
+      </div>
+      <div class="col-sm-12">
+        <label th:for="*{email}" class="form-label" th:text="e-mail"></label>
+        <input type="email" th:field="*{email}" class="form-control" th:placeholder="|메일 주소를 입력해주세요.|">
+      </div>
+      <div class="col-sm-auto">
+        <label th:for="*{firstPhone}" class="form-label" th:text="전화번호"></label>
+        <input type="text" th:field="*{firstPhone}" class="form-control" th:placeholder="|010|">
+      </div>
+      <div class="col-sm-auto">
+        <label th:for="*{middlePhone}" class="form-label" th:text="|&nbsp;|"></label>
+        <input type="text" th:field="*{middlePhone}" class="form-control" th:placeholder="1111">
+      </div>
+      <div class="col-sm-auto">
+        <label th:for="*{lastPhone}" class="form-label" th:text="|&nbsp;|"></label>
+        <input type="text" th:field="*{lastPhone}" class="form-control" th:placeholder="2222">
+      </div>
+      <div class="space"></div>
+      <div class="align-content-center">
+        <button type="submit" th:id="submitBtn" th:text="|회원가입|" class="btn btn-primary w-auto"/>
+        <button type="reset" th:text="다시입력" class="btn btn-dark w-auto"/>
+      </div>
+    </div>
+
+  </form>
+</div>
+<div th:replace="views/common/fotter :: fotter"/>
+</body>
+</html>
