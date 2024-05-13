@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="views/common/header :: header"/>
+<style>
+
+</style>
+<script>
+$(document).ready(function () {
+
+    $("#loginBtn").click(function (event) {
+        if (nullCheck($("#loginId").val())) {
+            alert("아이디를 입력해주세요.");
+            $("#loginId").focus();
+            event.preventDefault();
+            return;
+        }
+
+        if (nullCheck($("#loginPwd").val())) {
+            alert("비밀번호를 입력해주세요.");
+            $("#loginPwd").focus();
+            event.preventDefault();
+            return;
+        }
+    }) ;
+});
+</script>
+<body>
+<div th:replace="views/common/bodyHeader :: bodyHeader"/>
+
+<div style="width: 30%; margin-left: 35%;">
+    <form action="" method="post" th:object="${loginForm}">
+        <div class="h1 mb-3 fw-normal" style="margin-left: 40%;">LOGIN</div>
+        <p th:if="${#fields.hasGlobalErrors()}" th:text="${#fields.globalErrors().get(0)}"></p>
+        <div class="form-floating">
+            <input type="text" th:field="*{loginId}" class="form-control" placeholder="아이디를 입력하세요.">
+            <label th:for="*{loginId}" th:text="|아이디를 입력하세요.|"></label>
+        </div>
+        <div class="space"></div>
+        <p th:if="${#fields.hasErrors('loginId')}" th:text="${#fields.errors('loginId')}"></p>
+        <div class="form-floating">
+            <input type="password" th:field="*{loginPwd}" class="form-control" placeholder="비밀번호를 입력하세요.">
+            <label th:for="*{loginPwd}" th:text="|비밀번호를 입력하세요.|"></label>
+        </div>
+        <div class="space"></div>
+        <input type="submit" value="로그인" id="loginBtn" class="btn btn-primary w-100 py-2">	<br>
+
+        <div class="text-start my-3">
+            <p class="message">회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-link w-25 py-2" style="background-color: #dc3545">
+                    <a href="/member/add" style="color: white; text-decoration: none;">회원가입</a>
+                </button>
+            </p>
+        </div>
+    </form>
+</div>
+
+<div th:replace="views/common/fotter :: fotter"/>
+</body>
+</html>
