@@ -16,7 +16,7 @@
         WHERE MANAGE_COST_ID = #{manageCostId}
     </update>
 
-    <select id="findByHouseId">
+    <select id="findByHouseId" resultType="ManageCost">
         SELECT ELEC_COST, WATER_COST, INTERNET_COST, GAS_COST, PARK_COST
         FROM MANAGECOST
         WHERE HOUSE_ID = #{houseId}

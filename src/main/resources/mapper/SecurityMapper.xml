@@ -2,21 +2,21 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jsg.house.repository.mybatis.OptionsMapper">
+<mapper namespace="jsg.house.repository.mybatis.SecurityMapper">
 
     <insert id="save">
-        INSERT INTO SECURITY (HOUSE_ID, CCTV, VIEDO_PHONE, INTER_PHONE, FIRE_ALARM, FRONT_DOOR)
+        INSERT INTO SECURITY (HOUSE_ID, CCTV, VIDEO_PHONE, INTER_PHONE, FIRE_ALARM, FRONT_DOOR)
         VALUES(#{houseId}, #{cctv}, #{videoPhone}, #{interPhone}, #{fireAlarm}, #{frontDoor})
     </insert>
 
     <update id="update">
         UPDATE SECURITY
-        SET CCTV = #{}, VIDEO_PHONE= #{}, INTER_PHONE = #{}, FIRE_ALARM = #{}, FRONT_DOOR = #{}
+        SET CCTV = #{cctv}, VIDEO_PHONE = #{videoPhone}, INTER_PHONE = #{interPhone}, FIRE_ALARM = #{fireAlarm}, FRONT_DOOR = #{frontDoor}
         WHERE SECURITY_ID= #{securityId}
     </update>
 
-    <select id="findByHouseId">
-        SELECT CCTV, VIEDO_PHONE, INTER_PHONE, FIRE_ALARM, FRONT_DOOR
+    <select id="findByHouseId" resultType="Security">
+        SELECT CCTV, VIDEO_PHONE, INTER_PHONE, FIRE_ALARM, FRONT_DOOR
         FROM SECURITY
         WHERE HOSUE_ID = #{houseId}
     </select>

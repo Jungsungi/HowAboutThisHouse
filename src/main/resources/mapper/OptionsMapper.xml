@@ -5,7 +5,7 @@
 <mapper namespace="jsg.house.repository.mybatis.OptionsMapper">
 
     <insert id="save">
-        INSERT INTO OPTIONS (HOUSE_ID, PARK, ARICON, REFRIGE, WASHER, GAS, MICRO, ELEVATOR, BUILTIN)
+        INSERT INTO OPTIONS (HOUSE_ID, PARK, AIRCON, REFRIGE, WASHER, GAS, MICRO, ELEVATOR, BUILTIN)
         VALUES (#{houseId}, #{park}, #{aircon}, #{refrige}, #{washer}, #{gas}, #{micro}, #{elevator}, #{builtin})
     </insert>
 
@@ -16,8 +16,8 @@
         WHERE OPTIONS_ID= #{optionsId}
     </update>
 
-    <select id="findByHouseId">
-        SELECT PARK, ARICON, REFRIGE, WASHER, GAS, MICRO, ELEVATOR, BUILTIN, LAST_UPDATE_DATE
+    <select id="findByHouseId" resultType="Options">
+        SELECT PARK, AIRCON, REFRIGE, WASHER, GAS, MICRO, ELEVATOR, BUILTIN, LAST_UPDATE_DATE
         FROM OPTIONS
         WHERE HOUSE_ID = #{houseId}
     </select>
